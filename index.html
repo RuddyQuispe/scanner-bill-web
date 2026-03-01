@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Backnote Detector | Precisión Jurídica en un Click</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">LBD <span style="color: white">| Legal</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section id="scanner" class="scanner-section">
+        <div class="container">
+          <div class="glass-box scanner-container">
+            <h2 style="text-align: center; margin-bottom: 1rem">
+              Escaneador de Billetes
+            </h2>
+            <p
+              style="
+                text-align: center;
+                color: var(--text-muted);
+                margin-bottom: 2rem;
+                font-size: 0.95rem;
+              "
+            >
+              Posiciona el billete dentro del recuadro para identificar su
+              denominación y número de serie.
+            </p>
+            <div class="scanner-controls">
+              <button id="start-btn" class="btn">
+                &#128247; Activar Escáner
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2026 Legal Backnote Detector. Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <!-- FULLSCREEN SCANNER OVERLAY -->
+    <div
+      id="scanner-fullscreen"
+      class="scanner-fullscreen"
+      style="display: none"
+    >
+      <!-- Video de cámara -->
+      <video id="webcam" autoplay playsinline></video>
+
+      <!-- Overlay con guías y controles -->
+      <div class="fs-overlay">
+        <!-- Barra superior -->
+        <div class="fs-topbar">
+          <span id="scanner-status" class="fs-status">Cámara Lista</span>
+          <button id="close-btn" class="fs-close-btn" title="Cerrar">
+            &#x2715;
+          </button>
+        </div>
+
+        <!-- Guías del billete sobre el video -->
+        <div class="bill-guide">
+          <div class="guide-box value-top" data-label="VALOR"></div>
+          <div class="guide-box value-bottom" data-label="VALOR"></div>
+          <div class="guide-box serial-top" data-label="SERIE"></div>
+          <div class="guide-box serial-bottom" data-label="SERIE"></div>
+        </div>
+
+        <!-- Esquinas decorativas -->
+        <div class="focus-corners">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Línea de escaneo animada -->
+        <div class="scanner-line"></div>
+
+        <!-- Panel de resultado (oculto hasta escanear) -->
+        <div id="scan-result" class="fs-result" style="display: none">
+          <div class="fs-result-header">
+            <span class="accent-text">ANÁLISIS COMPLETADO</span>
+            <button id="result-close-btn" class="fs-result-close">
+              &#x2715;
+            </button>
+          </div>
+          <div id="ocr-details" class="ocr-data"></div>
+        </div>
+
+        <!-- Barra inferior con botón escanear -->
+        <div class="fs-bottombar">
+          <button id="scan-btn" class="btn fs-scan-btn">
+            &#128269; Escanear Billete
+          </button>
+        </div>
+      </div>
+
+      <canvas id="capture-canvas" style="display: none"></canvas>
+    </div>
+
+    <script type="module" src="/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,396 @@
+/* 
+    Legal Backnote Detector - Premium Design System
+    Palette: Navy, Gold, Slate, Snow
+*/
+
+:root {
+  --primary: #0a192f;
+  --primary-light: #172a45;
+  --accent: #c5a059;
+  --accent-hover: #e0bb75;
+  --text-main: #f8f9fa;
+  --text-muted: #8892b0;
+  --bg-body: #020c1b;
+  --bg-card: rgba(23, 42, 69, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Header */
+header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1rem;
+  font-family: var(--font-body);
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Scanner Section (página principal) */
+.scanner-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.glass-box {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  padding: 3rem 2rem;
+}
+
+.scanner-container {
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.scanner-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* ======================================
+   FULLSCREEN SCANNER OVERLAY
+   ====================================== */
+.scanner-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Video llena toda la pantalla */
+#webcam {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay transparente sobre el video */
+.fs-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Barra superior */
+.fs-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  pointer-events: all;
+}
+
+.fs-status {
+  font-size: 0.8rem;
+  color: #4ade80;
+  border: 1px solid #4ade80;
+  border-radius: 20px;
+  padding: 0.2rem 0.75rem;
+  background: rgba(0,0,0,0.5);
+}
+
+.fs-close-btn {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.fs-close-btn:hover {
+  background: rgba(248,113,113,0.3);
+  border-color: #f87171;
+}
+
+/* Área central con las guías (crece para ocupar el espacio entre topbar y bottombar) */
+.bill-guide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;
+  aspect-ratio: 2 / 1;
+  border: 1px dashed rgba(255,255,255,0.3);
+  pointer-events: none;
+}
+
+/* Recuadros guía */
+.guide-box {
+  position: absolute;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+}
+
+.guide-box::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+/* VALOR - esquinas izquierdas (rojo) */
+.value-top {
+  /* 20 grande superior izquierdo */
+  top: 11%;
+  left: 4%;
+  width: 12%;
+  height: 26%;
+  border-color: #f87171;
+  color: #f87171;
+}
+.value-bottom {
+  /* 20 pequeño inferior izquierdo */
+  bottom: 10%;
+  left: 4%;
+  width: 12%;
+  height: 20%;
+  border-color: #f87171;
+  color: #f87171;
+}
+
+/* SERIE horizontal (azul) - arriba derecha y abajo centro-derecha */
+.serial-top {
+  top: 10%;
+  right: 7%;
+  width: 27%;
+  height: 11%;
+  border-color: #60a5fa;
+  color: #60a5fa;
+}
+.serial-bottom {
+  bottom: 12%;
+  left: 16%;
+  width: 38%;
+  height: 15%;
+  border-color: #60a5fa;
+  color: #60a5fa;
+}
+
+
+
+/* Esquinas decorativas */
+.focus-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.focus-corners span {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--accent);
+}
+
+.focus-corners span:nth-child(1) { top: 16px; left: 16px; border-right: 0; border-bottom: 0; }
+.focus-corners span:nth-child(2) { top: 16px; right: 16px; border-left: 0; border-bottom: 0; }
+.focus-corners span:nth-child(3) { bottom: 16px; left: 16px; border-right: 0; border-top: 0; }
+.focus-corners span:nth-child(4) { bottom: 16px; right: 16px; border-left: 0; border-top: 0; }
+
+/* Línea de escaneo animada */
+.scanner-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  top: 0;
+  display: none;
+  pointer-events: none;
+}
+
+.scanning .scanner-line {
+  display: block;
+  animation: scanMove 2s linear infinite;
+}
+
+@keyframes scanMove {
+  0%   { top: 0; }
+  100% { top: 100%; }
+}
+
+/* Panel de resultados (dentro del fullscreen) */
+.fs-result {
+  position: absolute;
+  bottom: 90px;
+  left: 1rem;
+  right: 1rem;
+  background: rgba(2, 12, 27, 0.92);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  pointer-events: all;
+  backdrop-filter: blur(8px);
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fs-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.fs-result-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Barra inferior con botón escanear */
+.fs-bottombar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.25rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  pointer-events: all;
+}
+
+.fs-scan-btn {
+  padding: 0.9rem 3rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(197,160,89,0.4);
+}
+
+/* Datos OCR */
+.ocr-data {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.ocr-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 0.25rem;
+}
+
+.ocr-label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.accent-text {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Footer */
+footer {
+  padding: 50px 0;
+  text-align: center;
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-muted);
+}
