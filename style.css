@@ -437,7 +437,6 @@ header {
 .fs-scan-btn {
   padding: 0.9rem 3rem;
   font-size: 1rem;
-  border-radius: 50px;
   box-shadow: 0 4px 20px rgba(197,160,89,0.4);
 }
 
@@ -700,5 +699,28 @@ footer {
   
   .footer-tagline {
     margin: 0 auto;
+  }
+}
+@media (max-width: 480px) {
+  .manual-dialog-panel {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .chip-group {
+    gap: 0.4rem;
+  }
+
+  .chip {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .manual-dialog-footer {
+    flex-direction: column-reverse;
+  }
+
+  .manual-dialog-footer button {
+    width: 100%;
   }
 }

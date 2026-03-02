@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Diálogo de ingreso manual
     const manualDialog    = document.getElementById('manual-dialog');
     const manualOpenBtn   = document.getElementById('manual-input-btn');
+    const manualOpenBtnFs = document.getElementById('manual-input-btn-fs');
     const manualCloseBtn  = document.getElementById('manual-close-btn');
     const manualCancelBtn = document.getElementById('manual-cancel-btn');
     const manualSaveBtn   = document.getElementById('validar-manual');
@@ -96,6 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     manualOpenBtn.addEventListener('click', () => {
         // Podríamos en el futuro prellenar con el último OCR aquí
+        openManualDialog();
+    });
+
+    manualOpenBtnFs.addEventListener('click', () => {
+        closeScanner();
         openManualDialog();
     });
 
