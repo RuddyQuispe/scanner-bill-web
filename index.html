@@ -26,10 +26,18 @@
   </head>
   <body>
     <header>
-      <div class="container">
+      <div class="container header-content">
         <div class="logo">
-          Verificador <span style="color: white">| Billetes Bolivia</span>
+          Verificador <span class="header-subtitle">| Billetes Bolivia</span>
         </div>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Cambiar tema"
+        >
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
     </header>
 
@@ -289,6 +297,7 @@
       </div>
     </div>
 
-    <script type="module" src="/script.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="theme.js"></script>
   </body>
 </html>
