@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legal Backnote Detector | Precisión Jurídica en un Click</title>
+    <title>Verificador | Billetes Bolivia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,15 +11,115 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
   <body>
     <header>
       <div class="container">
-        <div class="logo">LBD <span style="color: white">| Legal</span></div>
+        <div class="logo">
+          Verificador <span style="color: white">| Billetes Bolivia</span>
+        </div>
       </div>
     </header>
 
     <main>
+      <section id="context" class="context-section">
+        <div class="container">
+          <div class="glass-box context-container">
+            <h1 class="accent-text">Validación de Billetes de Curso Legal</h1>
+            <p>
+              Tras el reciente accidente aéreo en El Alto, donde gran cantidad
+              de billetes fueron esparcidos, existe la necesidad crítica de
+              herramientas para validar la legalidad de los billetes en
+              circulación. Esta aplicación ayuda a identificar series reportadas
+              o dañadas mediante tecnología OCR.
+            </p>
+            <div class="news-grid">
+              <div class="news-card">
+                <div class="news-card-header">El Deber</div>
+                <iframe
+                  src="https://eldeber.com.bo/pais/autoridades-queman-billetes-esparcidos-accidente-aereo-alto_1772243431"
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <div class="news-card">
+                <div class="news-card-header">Min. Economía (X)</div>
+                <div class="tweet-container">
+                  <blockquote class="twitter-tweet">
+                    <p lang="es" dir="ltr">
+                      El Ministerio de Economía y Finanzas Públicas informa a la
+                      población que los billetes de Bs 50, Bs 20 y Bs 10 – Serie
+                      B, cuyos números de serie figuran en el listado oficial
+                      publicado, han sido declarados sin validez para
+                      transacciones.
+                      <a href="https://t.co/P0TWvPUXc4"
+                        >pic.twitter.com/P0TWvPUXc4</a
+                      >
+                    </p>
+                    &mdash; Min. Economía (@EconomiaBo)
+                    <a
+                      href="https://twitter.com/EconomiaBo/status/2028104771534487769?ref_src=twsrc%5Etfw"
+                      >March 1, 2026</a
+                    >
+                  </blockquote>
+                </div>
+              </div>
+              <div class="news-card">
+                <div class="news-card-header">Min. Economía (X)</div>
+                <div class="tweet-container">
+                  <blockquote class="twitter-tweet">
+                    <p lang="es" dir="ltr">
+                      Informamos a la población que la inhabilitación de los
+                      billetes de la Serie B es una medida de carácter temporal
+                      por un lapso de 48 horas.
+                      <a href="https://t.co/U6qAZh4qoD"
+                        >pic.twitter.com/U6qAZh4qoD</a
+                      >
+                    </p>
+                    &mdash; Min. Economía (@EconomiaBo)
+                    <a
+                      href="https://twitter.com/EconomiaBo/status/2027833751175041528?ref_src=twsrc%5Etfw"
+                      >February 28, 2026</a
+                    >
+                  </blockquote>
+                </div>
+              </div>
+              <div class="news-card">
+                <div class="news-card-header">La Razón Digital (X)</div>
+                <div class="tweet-container">
+                  <blockquote class="twitter-tweet">
+                    <p lang="es" dir="ltr">
+                      <a
+                        href="https://twitter.com/hashtag/Economia?src=hash&amp;ref_src=twsrc%5Etfw"
+                        >#Economia</a
+                      ><br />A partir del lunes, la Serie B vuelve a operar con
+                      normalidad y las restricciones se aplicarán para unas
+                      cuantas numeraciones.<a href="https://t.co/61xljWNDTG"
+                        >https://t.co/61xljWNDTG</a
+                      >
+                    </p>
+                    &mdash; La Razón Digital (@LaRazon_Bolivia)
+                    <a
+                      href="https://twitter.com/LaRazon_Bolivia/status/2027880097613586818?ref_src=twsrc%5Etfw"
+                      >February 28, 2026</a
+                    >
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charset="utf-8"
+      ></script>
+
       <section id="scanner" class="scanner-section">
         <div class="container">
           <div class="glass-box scanner-container">
@@ -39,7 +139,10 @@
             </p>
             <div class="scanner-controls">
               <button id="start-btn" class="btn">
-                &#128247; Activar Escáner
+                <i class="fas fa-camera"></i> Activar Escáner
+              </button>
+              <button id="manual-input-btn" class="btn scanner-manual-btn">
+                <i class="fas fa-pen-to-square"></i> Ingreso Manual
               </button>
             </div>
           </div>
@@ -48,10 +151,29 @@
     </main>
 
     <footer>
-      <div class="container">
-        <p>
-          &copy; 2026 Legal Backnote Detector. Todos los derechos reservados.
-        </p>
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">uyunicode</div>
+          <p class="footer-tagline">
+            Innovación y precisión tecnológica desde Bolivia.
+          </p>
+        </div>
+
+        <div class="footer-credits">
+          <div class="credits-header">Desarrollado por</div>
+          <ul class="credits-list">
+            <li><i class="fas fa-code"></i> Zuleny Cruz</li>
+            <li><i class="fas fa-terminal"></i> Ruddy Quispe</li>
+          </ul>
+          <div class="credits-location">
+            <i class="fas fa-map-marker-alt"></i> Santa Cruz, Bolivia
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>&copy; 2026 uyunicode. Todos los derechos reservados.</p>
+        </div>
       </div>
     </footer>
 
@@ -70,7 +192,7 @@
         <div class="fs-topbar">
           <span id="scanner-status" class="fs-status">Cámara Lista</span>
           <button id="close-btn" class="fs-close-btn" title="Cerrar">
-            &#x2715;
+            <i class="fas fa-xmark"></i>
           </button>
         </div>
 
@@ -95,21 +217,72 @@
           <div class="fs-result-header">
             <span class="accent-text">ANÁLISIS COMPLETADO</span>
             <button id="result-close-btn" class="fs-result-close">
-              &#x2715;
+              <i class="fas fa-xmark"></i>
             </button>
           </div>
           <div id="ocr-details" class="ocr-data"></div>
         </div>
 
-        <!-- Barra inferior con botón escanear -->
+        <!-- Barra inferior con botones de acción -->
         <div class="fs-bottombar">
           <button id="scan-btn" class="btn fs-scan-btn">
-            &#128269; Escanear Billete
+            <i class="fas fa-magnifying-glass"></i> Escanear Billete
+          </button>
+          <button id="manual-input-btn-fs" class="btn fs-manual-btn">
+            <i class="fas fa-pen-to-square"></i> Ingresar Manualmente
           </button>
         </div>
       </div>
 
       <canvas id="capture-canvas" style="display: none"></canvas>
+    </div>
+
+    <!-- Diálogo de ingreso manual -->
+    <div id="manual-dialog" class="manual-dialog" style="display: none">
+      <div class="manual-dialog-backdrop"></div>
+      <div class="manual-dialog-panel">
+        <div class="manual-dialog-header">
+          <h3>Ingreso Manual de Datos</h3>
+          <button id="manual-close-btn" class="manual-close-btn" title="Cerrar">
+            <i class="fas fa-xmark"></i>
+          </button>
+        </div>
+        <div class="manual-dialog-body">
+          <div class="manual-field">
+            <span>Denominación del billete</span>
+            <div id="valor-selector" class="chip-group">
+              <button type="button" class="chip" data-value="10">Bs 10</button>
+              <button type="button" class="chip" data-value="20">Bs 20</button>
+              <button type="button" class="chip" data-value="50">Bs 50</button>
+              <button type="button" class="chip" data-value="100">
+                Bs 100
+              </button>
+              <button type="button" class="chip" data-value="200">
+                Bs 200
+              </button>
+            </div>
+            <input type="hidden" id="manual-valor" value="" />
+          </div>
+
+          <label class="manual-field">
+            <span>Número de serie</span>
+            <input
+              id="manual-serie"
+              type="text"
+              placeholder="Ej: 181733528 A"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+        <div class="manual-dialog-footer">
+          <button id="manual-cancel-btn" class="btn manual-secondary">
+            Cancelar
+          </button>
+          <button id="validar-manual" class="btn btn-primary btn-block">
+            <i class="fas fa-check-circle"></i> Validar Billete
+          </button>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="/script.js"></script>
