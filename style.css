@@ -681,24 +681,52 @@ footer {
   gap: 0.6rem;
 }
 
-.footer-bottom {
-  padding: 1.5rem 0;
-  background: rgba(2, 12, 27, 0.8);
-  border-top: 1px solid var(--glass-border);
-  text-align: center;
-  font-size: 0.85rem;
+.footer-copyright {
+  font-size: 0.75rem;
   color: var(--text-muted);
+  margin-top: 0.75rem;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
+  header .container {
+    justify-content: center;
+  }
+
+  .context-container {
+    text-align: center;
+  }
+
+  .context-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .news-grid {
+    justify-content: center;
+  }
+
+  .scanner-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scanner-controls button {
+    width: 100%;
+    max-width: 320px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 2rem;
   }
-  
+
   .footer-tagline {
     margin: 0 auto;
+  }
+
+  .footer-copyright {
+    text-align: center;
   }
 }
 @media (max-width: 480px) {
