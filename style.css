@@ -1059,3 +1059,20 @@ footer {
   justify-content: center;
 }
 
+.verdict-image-container {
+  margin: 1rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verdict-image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+

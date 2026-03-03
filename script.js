@@ -158,6 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const scanResult = document.getElementById("scan-result");
   const ocrDetails = document.getElementById("ocr-details");
 
+  // Estado para el flujo de escaneo continuo
+  let isCurrentVerdictFromScanner = false;
+
   // Diálogo de ingreso manual
   const manualDialog = document.getElementById("manual-dialog");
   const manualOpenBtn = document.getElementById("manual-input-btn");
@@ -296,11 +299,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const verdictDenomEl = document.getElementById("verdict-denom");
   const verdictSerieEl = document.getElementById("verdict-serie");
   const verdictNoteEl = document.getElementById("verdict-note");
+  const verdictImageContainer = document.getElementById(
+    "verdict-image-container",
+  );
+  const verdictOfficialImg = document.getElementById("verdict-official-img");
   const verdictCloseBtn = document.getElementById("verdict-close-btn");
   const verdictOkBtn = document.getElementById("verdict-ok-btn");
 
   function closeVerdictDialog() {
     verdictDialog.style.display = "none";
+    // Si venimos del escáner, reiniciamos el estado para permitir nuevos escaneos
+    if (isCurrentVerdictFromScanner) {
+      isCurrentVerdictFromScanner = false;
+      // Opcionalmente podemos resetear el aviso de "ANÁLISIS COMPLETADO" en el escáner
+      scanResult.style.display = "none";
+    }
   }
   verdictCloseBtn.addEventListener("click", closeVerdictDialog);
   verdictOkBtn.addEventListener("click", closeVerdictDialog);
@@ -332,6 +345,13 @@ document.addEventListener("DOMContentLoaded", () => {
       inhabilitado ? "verdict-inhabilitado" : "verdict-legal",
     );
 
+    // Imágenes oficiales para billetes inhabilitados
+    const invalidImages = {
+      10: "https://pbs.twimg.com/media/HCVGfS0WAAAjTcP?format=jpg&name=4096x4096",
+      20: "https://pbs.twimg.com/media/HCVGfS0XcAAJccO?format=jpg&name=4096x4096",
+      50: "https://pbs.twimg.com/media/HCVGfThXsAEkYpa?format=jpg&name=4096x4096",
+    };
+
     // Datos
     verdictDenomEl.textContent = nombreDenom;
     verdictSerieEl.textContent = serie;
@@ -346,6 +366,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     verdictDialog.style.display = "flex";
+
+    // Mostrar imagen oficial si es inhabilitado
+    if (inhabilitado && invalidImages[parseInt(denominacion, 10)]) {
+      verdictOfficialImg.src = invalidImages[parseInt(denominacion, 10)];
+      verdictImageContainer.style.display = "block";
+    } else {
+      verdictImageContainer.style.display = "none";
+      verdictOfficialImg.src = "";
+    }
   }
 
   // ── Abrir escáner fullscreen ────────────────────────────────────────────
@@ -805,18 +834,36 @@ Asegúrate de:
     ];
 
     if (denoms.length > 0 && serials.length > 0) {
-      // Ambos detectados: prellenamos y abrimos sin aviso
-      closeScanner();
-      openManualDialog({ valor: denoms[0], serie: serials[0] });
+      // Ambos detectados: validación directa
+      const valor = denoms[0];
+      const serie = serials[0];
+      const { inhabilitado, numeroParsed } = esBilleteInhabilitado(
+        valor,
+        serie,
+      );
+
+      isCurrentVerdictFromScanner = true;
+      mostrarVeredicto(valor, serie, inhabilitado, numeroParsed);
+
+      // No cerramos el escáner (closeScanner), solo el panel de resultados internos si lo hubiera
+      scanResult.style.display = "none";
+
+      console.log("Validación directa desde OCR:", {
+        valor,
+        serie,
+        inhabilitado,
+      });
     } else if (denoms.length > 0) {
-      // Solo denominación: avisamos que falta la serie
+      // Solo denominación: requiere completar datos
+      isCurrentVerdictFromScanner = false;
       closeScanner();
       openManualDialog(
         { valor: denoms[0], serie: "" },
         "No se pudo leer el número de serie. Complétalo manualmente o vuelve a escanear.",
       );
     } else if (serials.length > 0) {
-      // Solo serie: avisamos que falta la denominación
+      // Solo serie: requiere completar datos
+      isCurrentVerdictFromScanner = false;
       closeScanner();
       openManualDialog(
         { valor: "", serie: serials[0] },
