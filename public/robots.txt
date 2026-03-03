@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://verifica-billetes.vercel.app/sitemap.xml
