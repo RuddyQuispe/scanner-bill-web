@@ -124,14 +124,14 @@ const ROI_CONFIG = [
     id: "serial-top",
     name: "Serie Superior (horizontal)",
     kind: "serie",
-    css: { top: 0.1, right: 0.07, width: 0.27, height: 0.11 },
+    css: { top: 0.1, right: 0.05, width: 0.32, height: 0.11 },
     selector: ".serial-top",
   },
   {
     id: "serial-bottom",
     name: "Serie Inferior (horizontal)",
     kind: "serie",
-    css: { bottom: 0.12, left: 0.16, width: 0.38, height: 0.15 },
+    css: { bottom: 0.12, left: 0.14, width: 0.42, height: 0.15 },
     selector: ".serial-bottom",
   },
 ];
@@ -401,13 +401,29 @@ Prueba esto:
       statusBadge.style.borderColor = "#fde68a";
 
       // Pedimos a la cámara una resolución alta (con fallback automático)
-      stream = await navigator.mediaDevices.getUserMedia({
+      // Intentamos solicitar enfoque continuo si el navegador lo soporta
+      const constraints = {
         video: {
           facingMode: { ideal: "environment" },
           width: { ideal: 1920, min: 1280 },
           height: { ideal: 1080, min: 720 },
         },
-      });
+      };
+
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+      // Intentar aplicar enfoque continuo después de obtener el stream
+      const track = stream.getVideoTracks()[0];
+      const capabilities = track.getCapabilities ? track.getCapabilities() : {};
+
+      if (
+        capabilities.focusMode &&
+        capabilities.focusMode.includes("continuous")
+      ) {
+        await track.applyConstraints({
+          advanced: [{ focusMode: "continuous" }],
+        });
+      }
 
       video.srcObject = stream;
       fullscreen.style.display = "flex";
@@ -489,7 +505,9 @@ Asegúrate de:
     scanBtn.disabled = true;
     scanBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
     scanResult.style.display = "none";
-    scanResult.style.display = "none";
+
+    // Pequeño delay para dejar que el autoenfoque se estabilice tras el movimiento
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
     const ctx = canvas.getContext("2d");
 
@@ -545,6 +563,7 @@ Asegúrate de:
         sCtx.drawImage(rc, 0, 0, sc.width, sc.height);
 
         // Configurar OCR según el tipo de zona (valor / serie / mixto)
+        // Usamos PSM 7 (Single text line) para zonas específicas
         const whitelist =
           roi.kind === "valor"
             ? "0123456789"
@@ -552,11 +571,23 @@ Asegúrate de:
               ? "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ "
               : "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
+        // Pre-procesamiento de imagen: Grayscale + Threshold
+        const imageData = sCtx.getImageData(0, 0, sc.width, sc.height);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          // Binarización simple (umbral 128)
+          const val = avg > 120 ? 255 : 0;
+          data[i] = data[i + 1] = data[i + 2] = val;
+        }
+        sCtx.putImageData(imageData, 0, 0);
+
         const result = await Tesseract.recognize(
-          sc.toDataURL("image/jpeg", 0.95),
+          sc.toDataURL("image/jpeg", 0.9), // Calidad balanceada
           "eng",
           {
             tessedit_char_whitelist: whitelist,
+            tessedit_pageseg_mode: "7", // Tratar como línea de texto única
           },
         );
         combinedText += `\n[${roi.name}]: ${result.data.text.trim()}`;
