@@ -816,3 +816,246 @@ footer {
     width: 100%;
   }
 }
+
+/* ── Veredicto del billete ─────────────────────────────────────────────────── */
+.verdict-card {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  backdrop-filter: blur(20px);
+  animation: verdictEntrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  border: 1px solid;
+}
+
+@keyframes verdictEntrance {
+  from { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.92); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1); }
+}
+
+.verdict-legal {
+  background: rgba(5, 30, 10, 0.95);
+  border-color: #22c55e;
+  box-shadow: 0 20px 60px rgba(34,197,94,0.25), 0 0 0 1px rgba(34,197,94,0.15);
+}
+
+.verdict-inhabilitado {
+  background: rgba(30, 5, 5, 0.95);
+  border-color: #ef4444;
+  box-shadow: 0 20px 60px rgba(239,68,68,0.25), 0 0 0 1px rgba(239,68,68,0.15);
+}
+
+.verdict-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.verdict-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.verdict-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.verdict-legal .verdict-title   { color: #4ade80; }
+.verdict-inhabilitado .verdict-title { color: #f87171; }
+
+.verdict-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.verdict-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.verdict-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.verdict-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  font-family: 'Courier New', monospace;
+}
+
+.verdict-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.verdict-note strong {
+  color: var(--text-main);
+}
+
+.verdict-dismiss {
+  width: 100%;
+  padding: 0.65rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.07);
+  color: var(--text-main);
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+
+.verdict-dismiss:hover {
+  background: rgba(255,255,255,0.13);
+}
+
+/* Banner de aviso OCR parcial (aparece dentro del diálogo de ingreso manual) */
+.ocr-hint-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  line-height: 1.4;
+  animation: fadeUp 0.25s ease;
+}
+
+.ocr-hint-banner i {
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* Mensaje de error inline dentro del diálogo */
+.dialog-error {
+  font-size: 0.82rem;
+  color: #f87171;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.2s ease;
+}
+
+/* ── Panel del diálogo de veredicto ─────────────────────────────────────────── */
+.verdict-panel {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.verdict-panel.verdict-legal {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 1px rgba(34,197,94,0.2), 0 20px 50px rgba(34,197,94,0.15);
+}
+
+.verdict-panel.verdict-inhabilitado {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px rgba(239,68,68,0.2), 0 20px 50px rgba(239,68,68,0.15);
+}
+
+.verdict-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.verdict-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.verdict-badge-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.verdict-badge-label {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.verdict-panel.verdict-legal   .verdict-badge-label { color: #4ade80; }
+.verdict-panel.verdict-inhabilitado .verdict-badge-label { color: #f87171; }
+
+.verdict-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.verdict-dialog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1rem;
+}
+
+.verdict-dialog-row + .verdict-dialog-row {
+  border-top: 1px solid var(--glass-border);
+}
+
+.verdict-dialog-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.verdict-dialog-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  font-family: 'Courier New', monospace;
+}
+
+.verdict-dialog-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.verdict-dialog-note strong {
+  color: var(--text-main);
+}
+
+.verdict-ok-btn {
+  width: 100%;
+  justify-content: center;
+}
+

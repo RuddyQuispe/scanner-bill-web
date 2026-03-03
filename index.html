@@ -24,6 +24,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   </head>
+
   <body>
     <header>
       <div class="container header-content">
@@ -179,7 +180,7 @@
         <div class="footer-credits">
           <div class="credits-header">Desarrollado por</div>
           <ul class="credits-list">
-            <li><i class="fas fa-code"></i> Zuleny Cruz</li>
+            <!--<li><i class="fas fa-code"></i></li>-->
             <li><i class="fas fa-code"></i> Ruddy Quispe</li>
           </ul>
           <div class="credits-location">
@@ -283,6 +284,7 @@
               type="text"
               placeholder="Ej: 181733528 A"
               autocomplete="off"
+              maxlength="12"
             />
           </label>
         </div>
@@ -294,6 +296,40 @@
             <i class="fas fa-check-circle"></i> Validar Billete
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Diálogo de veredicto -->
+    <div id="verdict-dialog" class="manual-dialog" style="display: none">
+      <div class="manual-dialog-backdrop"></div>
+      <div class="manual-dialog-panel verdict-panel" id="verdict-panel">
+        <div class="verdict-dialog-header">
+          <div class="verdict-badge" id="verdict-badge">
+            <span class="verdict-badge-icon" id="verdict-badge-icon"></span>
+            <span class="verdict-badge-label" id="verdict-badge-label"></span>
+          </div>
+          <button
+            id="verdict-close-btn"
+            class="manual-close-btn"
+            title="Cerrar"
+          >
+            <i class="fas fa-xmark"></i>
+          </button>
+        </div>
+        <div class="verdict-dialog-body">
+          <div class="verdict-dialog-row">
+            <span class="verdict-dialog-label">Denominación</span>
+            <span class="verdict-dialog-value" id="verdict-denom"></span>
+          </div>
+          <div class="verdict-dialog-row">
+            <span class="verdict-dialog-label">Nro. de Serie</span>
+            <span class="verdict-dialog-value" id="verdict-serie"></span>
+          </div>
+        </div>
+        <p class="verdict-dialog-note" id="verdict-note"></p>
+        <button class="btn btn-block verdict-ok-btn" id="verdict-ok-btn">
+          Aceptar
+        </button>
       </div>
     </div>
 
